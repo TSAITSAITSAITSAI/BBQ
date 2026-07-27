@@ -319,12 +319,133 @@
       font-size: 14px;
     }
 
+    .shopping-card {
+      grid-column: 1 / -1;
+    }
+
     .shopping-card li {
       display: flex;
       justify-content: space-between;
       gap: 16px;
     }
 
+    .claim-toolbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 16px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .claim-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .claim-row,
+    .claim-head {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr .8fr .7fr 92px;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .claim-head {
+      padding: 0 8px 8px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .claim-row {
+      min-height: 48px;
+      padding: 8px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .76);
+    }
+
+    .claim-row input,
+    .claim-row select,
+    .claim-add-form input,
+    .claim-add-form select {
+      width: 100%;
+      min-height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 0 10px;
+      color: var(--ink);
+      background: #fff;
+      font: inherit;
+      font-weight: 600;
+    }
+
+    .claim-amount,
+    .claim-confirmed {
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .claim-status {
+      display: inline-flex;
+      justify-content: center;
+      min-height: 28px;
+      padding: 2px 10px;
+      border-radius: 999px;
+      color: var(--leaf-dark);
+      background: rgba(55, 98, 79, .12);
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .claim-status.pending {
+      color: #8a5a16;
+      background: rgba(242, 177, 94, .24);
+    }
+
+    .claim-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 6px;
+    }
+
+    .icon-button {
+      min-height: 34px;
+      border: 0;
+      border-radius: 8px;
+      padding: 0 10px;
+      color: var(--leaf-dark);
+      background: rgba(55, 98, 79, .12);
+      font: inherit;
+      font-size: 13px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .icon-button.primary {
+      color: #fff;
+      background: var(--leaf);
+    }
+
+    .claim-add-form {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr .8fr .7fr 92px;
+      gap: 10px;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+    }
+
+    .empty-state {
+      padding: 18px;
+      border: 1px dashed var(--line);
+      border-radius: 8px;
+      color: var(--muted);
+      text-align: center;
+    }
     .shopping-form {
       display: grid;
       gap: 10px;
@@ -521,10 +642,29 @@
         gap: 4px;
       }
 
-      .form-row {
+      .claim-toolbar,
+      .claim-row,
+      .claim-head,
+      .claim-add-form {
         grid-template-columns: 1fr;
       }
 
+      .claim-head {
+        display: none;
+      }
+
+      .claim-actions {
+        justify-content: stretch;
+      }
+
+      .claim-actions button,
+      .claim-add-form .mini-button {
+        width: 100%;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
       .sheet-actions .mini-button {
         width: 100%;
       }
@@ -626,43 +766,32 @@
           </div>
           <div class="summary-card shopping-card">
             <strong>額外採買與認領</strong>
-            <ul>
-              <li><span>好市多烤肉食材</span><span>可直接填下方認領</span></li>
-              <li><span>飲料</span><span>可直接填下方認領</span></li>
-              <li><span>啤酒</span><span>可直接填下方認領</span></li>
-              <li><span>冰塊</span><span>可直接填下方認領</span></li>
-              <li><span>紙盤、紙碗、免洗筷</span><span>可直接填下方認領</span></li>
-              <li><span>烤肉夾、剪刀、垃圾袋</span><span>可直接填下方認領</span></li>
-            </ul>
-            <form class="shopping-form" id="shopping-form">
-              <label>品項
-                <input id="shopping-item" name="item" type="text" placeholder="例如：飲料、啤酒、冰塊" required>
-              </label>
-              <label>認領人
-                <input id="shopping-owner" name="owner" type="text" placeholder="例如：Ryan" required>
-              </label>
-              <div class="form-row">
-                <label>數量
-                  <input id="shopping-quantity" name="quantity" type="text" placeholder="例如：2箱">
-                </label>
-                <label>金額
-                  <input id="shopping-amount" name="amount" type="number" min="0" inputmode="numeric" placeholder="例如：800">
-                </label>
-              </div>
-              <label>備註
-                <textarea id="shopping-note" name="note" placeholder="例如：無糖茶多一點、已在好市多購買"></textarea>
-              </label>
-              <label class="checkbox-label">
-                <input id="shopping-purchased" name="purchased" type="checkbox">
-                已購買
-              </label>
-              <div class="sheet-actions">
-                <button class="mini-button" id="shopping-submit" type="submit">送出紀錄</button>
-                <a class="mini-button secondary" href="https://docs.google.com/spreadsheets/d/1tTAVg4fn4Zf7-HA2ZBfkYUqoiQNMndNlRJ0wv0peqnQ/edit?usp=sharing" target="_blank" rel="noreferrer">查看清單</a>
-              </div>
-              <p class="form-message" id="shopping-message" role="status" aria-live="polite"></p>
+            <div class="claim-toolbar">
+              <span id="claim-count">讀取最新狀況中...</span>
+              <button class="mini-button secondary" id="claim-refresh" type="button">重新整理</button>
+            </div>
+            <div class="claim-head" aria-hidden="true">
+              <span>品項</span>
+              <span>認領人</span>
+              <span>金額</span>
+              <span>確認</span>
+              <span></span>
+            </div>
+            <div class="claim-list" id="claim-list">
+              <div class="empty-state">正在讀取 Google Sheet 最新資料</div>
+            </div>
+            <form class="claim-add-form" id="claim-form">
+              <input id="claim-item" name="item" type="text" placeholder="好市多肉" aria-label="品項" required>
+              <input id="claim-owner" name="owner" type="text" placeholder="認領人" aria-label="認領人" required>
+              <input id="claim-amount" name="amount" type="number" min="0" inputmode="numeric" placeholder="金額" aria-label="金額">
+              <select id="claim-confirmed" name="confirmed" aria-label="確認狀態">
+                <option value="否">未確認</option>
+                <option value="是">已確認</option>
+              </select>
+              <button class="mini-button" id="claim-submit" type="submit">新增</button>
             </form>
-            <span class="note">送出後會自動記錄到 Google Sheet，大家查看清單時會看到同一份資料。</span>
+            <p class="form-message" id="claim-message" role="status" aria-live="polite"></p>
+            <span class="note">清單會直接讀取 Google Sheet 最新狀況；修改後會自動重新整理。</span>
           </div>
         </div>
       </div>
@@ -689,48 +818,199 @@
     </section>
   </main>  <script>
     const scriptUrl = "https://script.google.com/macros/s/AKfycbytgMs3haEIUQ9CEI4TCcZcwHTmnq411MdD1SZO6WJs29KQqk33N2T4s3HEuAhzF1It/exec";
-    const shoppingForm = document.querySelector("#shopping-form");
-    const shoppingSubmit = document.querySelector("#shopping-submit");
-    const shoppingMessage = document.querySelector("#shopping-message");
+    const claimList = document.querySelector("#claim-list");
+    const claimCount = document.querySelector("#claim-count");
+    const claimRefresh = document.querySelector("#claim-refresh");
+    const claimForm = document.querySelector("#claim-form");
+    const claimSubmit = document.querySelector("#claim-submit");
+    const claimMessage = document.querySelector("#claim-message");
+    let claims = [];
 
-    shoppingForm.addEventListener("submit", async (event) => {
+    const setClaimMessage = (message, isError = false) => {
+      claimMessage.textContent = message;
+      claimMessage.style.color = isError ? "#a33d2a" : "var(--leaf-dark)";
+    };
+
+    const moneyText = (value) => {
+      const amount = Number(value || 0);
+      return amount > 0 ? `${amount.toLocaleString("zh-TW")} 元` : "-";
+    };
+
+    const escapeHtml = (value) => String(value || "").replace(/[&<>"']/g, (character) => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      "\"": "&quot;",
+      "'": "&#039;"
+    }[character]));
+
+    const jsonp = (url, params = {}) => new Promise((resolve, reject) => {
+      const callbackName = `claimCallback_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+      const script = document.createElement("script");
+      const timeout = window.setTimeout(() => {
+        cleanup();
+        reject(new Error("讀取逾時，請確認 Apps Script 已更新 doGet。"));
+      }, 12000);
+
+      const cleanup = () => {
+        window.clearTimeout(timeout);
+        script.remove();
+        delete window[callbackName];
+      };
+
+      window[callbackName] = (data) => {
+        cleanup();
+        resolve(data);
+      };
+
+      const query = new URLSearchParams({ ...params, callback: callbackName, t: Date.now() });
+      script.src = `${url}?${query.toString()}`;
+      script.onerror = () => {
+        cleanup();
+        reject(new Error("讀取失敗，請確認 Apps Script 部署權限。"));
+      };
+      document.body.appendChild(script);
+    });
+
+    const postClaim = async (payload) => {
+      await fetch(scriptUrl, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8"
+        },
+        body: JSON.stringify(payload)
+      });
+    };
+
+    const renderClaims = () => {
+      if (!claims.length) {
+        claimList.innerHTML = '<div class="empty-state">目前還沒有認領資料，從下方新增第一筆。</div>';
+        claimCount.textContent = "目前 0 筆認領";
+        return;
+      }
+
+      claimCount.textContent = `目前 ${claims.length} 筆認領`;
+      claimList.innerHTML = claims.map((claim) => `
+        <div class="claim-row" data-id="${claim.id}">
+          <span class="claim-item">${escapeHtml(claim.item) || "-"}</span>
+          <span class="claim-owner">${escapeHtml(claim.owner) || "-"}</span>
+          <span class="claim-amount">${moneyText(claim.amount)}</span>
+          <span><span class="claim-status ${claim.confirmed === "是" ? "" : "pending"}">${claim.confirmed === "是" ? "已確認" : "未確認"}</span></span>
+          <span class="claim-actions"><button class="icon-button" type="button" data-action="edit">編輯</button></span>
+        </div>
+      `).join("");
+    };
+
+    const loadClaims = async () => {
+      claimRefresh.disabled = true;
+      claimCount.textContent = "讀取最新狀況中...";
+      try {
+        const data = await jsonp(scriptUrl, { action: "list" });
+        if (data.ok === false) {
+          throw new Error(data.message || "Apps Script 回傳失敗。");
+        }
+        claims = Array.isArray(data.rows) ? data.rows : [];
+        renderClaims();
+        setClaimMessage("已更新到最新狀況。");
+      } catch (error) {
+        claimList.innerHTML = '<div class="empty-state">讀取失敗，請先更新 Apps Script 程式碼後重新部署。</div>';
+        claimCount.textContent = "無法讀取最新狀況";
+        setClaimMessage(error.message, true);
+      } finally {
+        claimRefresh.disabled = false;
+      }
+    };
+
+    const startEdit = (row) => {
+      const id = row.dataset.id;
+      const claim = claims.find((entry) => String(entry.id) === String(id));
+      if (!claim) return;
+
+      row.innerHTML = `
+        <input name="item" value="${escapeHtml(claim.item)}" aria-label="品項">
+        <input name="owner" value="${escapeHtml(claim.owner)}" aria-label="認領人">
+        <input name="amount" type="number" min="0" inputmode="numeric" value="${escapeHtml(claim.amount)}" aria-label="金額">
+        <select name="confirmed" aria-label="確認狀態">
+          <option value="否" ${claim.confirmed === "是" ? "" : "selected"}>未確認</option>
+          <option value="是" ${claim.confirmed === "是" ? "selected" : ""}>已確認</option>
+        </select>
+        <span class="claim-actions">
+          <button class="icon-button primary" type="button" data-action="save">儲存</button>
+          <button class="icon-button" type="button" data-action="cancel">取消</button>
+        </span>
+      `;
+    };
+
+    const saveEdit = async (row) => {
+      const item = row.querySelector('[name="item"]').value.trim();
+      const owner = row.querySelector('[name="owner"]').value.trim();
+      const amount = row.querySelector('[name="amount"]').value.trim();
+      const confirmed = row.querySelector('[name="confirmed"]').value;
+
+      if (!item || !owner) {
+        setClaimMessage("品項和認領人都要填。", true);
+        return;
+      }
+
+      setClaimMessage("儲存中...");
+      await postClaim({ action: "update", id: row.dataset.id, item, owner, amount, confirmed });
+      setClaimMessage("已儲存，正在更新最新狀況。");
+      window.setTimeout(loadClaims, 800);
+    };
+
+    claimList.addEventListener("click", async (event) => {
+      const button = event.target.closest("button[data-action]");
+      if (!button) return;
+      const row = button.closest(".claim-row");
+      const action = button.dataset.action;
+
+      try {
+        if (action === "edit") startEdit(row);
+        if (action === "cancel") renderClaims();
+        if (action === "save") await saveEdit(row);
+      } catch (error) {
+        setClaimMessage("儲存失敗，請稍後再試。", true);
+      }
+    });
+
+    claimForm.addEventListener("submit", async (event) => {
       event.preventDefault();
-      shoppingSubmit.disabled = true;
-      shoppingSubmit.textContent = "送出中...";
-      shoppingMessage.textContent = "";
+      claimSubmit.disabled = true;
+      claimSubmit.textContent = "新增中...";
+      setClaimMessage("");
 
-      const formData = new FormData(shoppingForm);
+      const formData = new FormData(claimForm);
       const payload = {
+        action: "create",
         item: formData.get("item") || "",
         owner: formData.get("owner") || "",
-        quantity: formData.get("quantity") || "",
         amount: formData.get("amount") || "",
-        note: formData.get("note") || "",
-        purchased: formData.get("purchased") ? "是" : "否"
+        confirmed: formData.get("confirmed") || "否"
       };
 
       try {
-        await fetch(scriptUrl, {
-          method: "POST",
-          mode: "no-cors",
-          headers: {
-            "Content-Type": "text/plain;charset=utf-8"
-          },
-          body: JSON.stringify(payload)
-        });
-
-        shoppingForm.reset();
-        shoppingMessage.textContent = "已送出，請到 Google Sheet 查看紀錄。";
+        await postClaim(payload);
+        claimForm.reset();
+        setClaimMessage("已新增，正在更新最新狀況。");
+        window.setTimeout(loadClaims, 800);
       } catch (error) {
-        shoppingMessage.textContent = "送出失敗，請稍後再試或直接打開清單填寫。";
+        setClaimMessage("新增失敗，請稍後再試。", true);
       } finally {
-        shoppingSubmit.disabled = false;
-        shoppingSubmit.textContent = "送出紀錄";
+        claimSubmit.disabled = false;
+        claimSubmit.textContent = "新增";
       }
     });
+
+    claimRefresh.addEventListener("click", loadClaims);
+    loadClaims();
   </script>
 </body>
 </html>
+
+
+
+
 
 
 
