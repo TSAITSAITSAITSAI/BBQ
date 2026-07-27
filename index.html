@@ -348,7 +348,7 @@
     .claim-row,
     .claim-head {
       display: grid;
-      grid-template-columns: 1.6fr 1fr .8fr .7fr 92px;
+      grid-template-columns: 1.4fr .9fr .8fr 1.2fr .7fr 140px;
       gap: 10px;
       align-items: center;
     }
@@ -430,9 +430,20 @@
       background: var(--leaf);
     }
 
+    .icon-button.danger {
+      color: #fff;
+      background: #a33d2a;
+    }
+
+    .claim-note {
+      color: var(--muted);
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+
     .claim-add-form {
       display: grid;
-      grid-template-columns: 1.6fr 1fr .8fr .7fr 92px;
+      grid-template-columns: 1.4fr .9fr .8fr 1.2fr .7fr 92px;
       gap: 10px;
       margin-top: 14px;
       padding-top: 14px;
@@ -678,7 +689,6 @@
       <h1>一場不用飛遠的烤肉小旅行</h1>
       <p class="hero-copy">有溪水、有山風、有一爐炭火，還有一群剛剛好的朋友。把忙碌留在城市裡，跟我們去流霞谷放空一下。</p>
       <div class="hero-actions">
-        <a class="button button-primary" href="#signup">我要參加</a>
         <a class="button button-secondary" href="https://www.google.com/maps/search/?api=1&query=%E6%B5%81%E9%9C%9E%E8%B0%B7%E8%A6%AA%E6%B0%B4%E7%83%A4%E8%82%89%E5%9C%92%E5%8D%80" target="_blank" rel="noreferrer">查看地點</a>
       </div>
     </div>
@@ -774,6 +784,7 @@
               <span>品項</span>
               <span>認領人</span>
               <span>金額</span>
+              <span>備註</span>
               <span>確認</span>
               <span></span>
             </div>
@@ -783,7 +794,8 @@
             <form class="claim-add-form" id="claim-form">
               <input id="claim-item" name="item" type="text" placeholder="好市多肉" aria-label="品項" required>
               <input id="claim-owner" name="owner" type="text" placeholder="認領人" aria-label="認領人" required>
-              <input id="claim-amount" name="amount" type="number" min="0" inputmode="numeric" placeholder="金額" aria-label="金額">
+              <input id="claim-amount" name="amount" type="text" placeholder="金額或未確定" aria-label="金額">
+              <input id="claim-note" name="note" type="text" placeholder="備註" aria-label="備註">
               <select id="claim-confirmed" name="confirmed" aria-label="確認狀態">
                 <option value="否">未確認</option>
                 <option value="是">已確認</option>
@@ -810,11 +822,10 @@
       </ul>
     </section>
 
-    <section id="signup" class="closing">
-      <h2>跟著我們一起來吧。</h2>
-      <p>到流霞谷，參加這場屬於我們的烤肉小旅行。吹吹風、聊聊天、吃吃烤肉，把平常的忙碌暫時放一旁。</p>
-      <a class="button button-primary" href="https://line.me/R/ti/p/@your-line-id" target="_blank" rel="noreferrer">點我報名</a>
-      <div class="footer-note">報名連結、日期與費用可再替換成正式資訊。</div>
+    <section class="closing">
+      <h2>人數已固定，剩下就把東西準備好。</h2>
+      <p>採買認領直接在上方更新，大家看到的會是同一份最新狀況。</p>
+      <div class="footer-note">有臨時調整就改認領清單，出發前再一起確認。</div>
     </section>
   </main>  <script>
     const scriptUrl = "https://script.google.com/macros/s/AKfycbytgMs3haEIUQ9CEI4TCcZcwHTmnq411MdD1SZO6WJs29KQqk33N2T4s3HEuAhzF1It/exec";
@@ -832,8 +843,10 @@
     };
 
     const moneyText = (value) => {
-      const amount = Number(value || 0);
-      return amount > 0 ? `${amount.toLocaleString("zh-TW")} 元` : "-";
+      const text = String(value || "").trim();
+      if (!text) return "未確定";
+      const amount = Number(text);
+      return Number.isFinite(amount) && amount > 0 ? `${amount.toLocaleString("zh-TW")} 元` : escapeHtml(text);
     };
 
     const escapeHtml = (value) => String(value || "").replace(/[&<>"']/g, (character) => ({
@@ -896,8 +909,12 @@
           <span class="claim-item">${escapeHtml(claim.item) || "-"}</span>
           <span class="claim-owner">${escapeHtml(claim.owner) || "-"}</span>
           <span class="claim-amount">${moneyText(claim.amount)}</span>
+          <span class="claim-note">${escapeHtml(claim.note) || "-"}</span>
           <span><span class="claim-status ${claim.confirmed === "是" ? "" : "pending"}">${claim.confirmed === "是" ? "已確認" : "未確認"}</span></span>
-          <span class="claim-actions"><button class="icon-button" type="button" data-action="edit">編輯</button></span>
+          <span class="claim-actions">
+            <button class="icon-button" type="button" data-action="edit">編輯</button>
+            <button class="icon-button danger" type="button" data-action="delete">刪除</button>
+          </span>
         </div>
       `).join("");
     };
@@ -930,7 +947,8 @@
       row.innerHTML = `
         <input name="item" value="${escapeHtml(claim.item)}" aria-label="品項">
         <input name="owner" value="${escapeHtml(claim.owner)}" aria-label="認領人">
-        <input name="amount" type="number" min="0" inputmode="numeric" value="${escapeHtml(claim.amount)}" aria-label="金額">
+        <input name="amount" type="text" value="${escapeHtml(claim.amount)}" aria-label="金額">
+        <input name="note" value="${escapeHtml(claim.note)}" aria-label="備註">
         <select name="confirmed" aria-label="確認狀態">
           <option value="否" ${claim.confirmed === "是" ? "" : "selected"}>未確認</option>
           <option value="是" ${claim.confirmed === "是" ? "selected" : ""}>已確認</option>
@@ -946,6 +964,7 @@
       const item = row.querySelector('[name="item"]').value.trim();
       const owner = row.querySelector('[name="owner"]').value.trim();
       const amount = row.querySelector('[name="amount"]').value.trim();
+      const note = row.querySelector('[name="note"]').value.trim();
       const confirmed = row.querySelector('[name="confirmed"]').value;
 
       if (!item || !owner) {
@@ -954,11 +973,22 @@
       }
 
       setClaimMessage("儲存中...");
-      await postClaim({ action: "update", id: row.dataset.id, item, owner, amount, confirmed });
+      await postClaim({ action: "update", id: row.dataset.id, item, owner, amount, note, confirmed });
       setClaimMessage("已儲存，正在更新最新狀況。");
       window.setTimeout(loadClaims, 800);
     };
 
+
+    const deleteClaim = async (row) => {
+      const claim = claims.find((entry) => String(entry.id) === String(row.dataset.id));
+      const label = claim && claim.item ? claim.item : "這筆資料";
+      if (!window.confirm(`確定刪除「${label}」嗎？`)) return;
+
+      setClaimMessage("刪除中...");
+      await postClaim({ action: "delete", id: row.dataset.id });
+      setClaimMessage("已刪除，正在更新最新狀況。");
+      window.setTimeout(loadClaims, 800);
+    };
     claimList.addEventListener("click", async (event) => {
       const button = event.target.closest("button[data-action]");
       if (!button) return;
@@ -969,6 +999,7 @@
         if (action === "edit") startEdit(row);
         if (action === "cancel") renderClaims();
         if (action === "save") await saveEdit(row);
+        if (action === "delete") await deleteClaim(row);
       } catch (error) {
         setClaimMessage("儲存失敗，請稍後再試。", true);
       }
@@ -986,6 +1017,7 @@
         item: formData.get("item") || "",
         owner: formData.get("owner") || "",
         amount: formData.get("amount") || "",
+        note: formData.get("note") || "",
         confirmed: formData.get("confirmed") || "否"
       };
 
@@ -1007,6 +1039,8 @@
   </script>
 </body>
 </html>
+
+
 
 
 
