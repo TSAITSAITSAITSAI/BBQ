@@ -1,0 +1,737 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>流霞谷烤肉小旅行邀請</title>
+  <meta name="description" content="到流霞谷，參加一場有溪水、山風、炭火與朋友的烤肉小旅行。">
+  <style>
+    :root {
+      --ink: #24312d;
+      --muted: #63706a;
+      --paper: #fffaf0;
+      --leaf: #37624f;
+      --leaf-dark: #24483b;
+      --river: #5c9ead;
+      --sun: #f2b15e;
+      --coal: #2b2b2b;
+      --line: rgba(36, 49, 45, .14);
+      --shadow: 0 22px 60px rgba(26, 43, 39, .18);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: "Noto Sans TC", "Microsoft JhengHei", Arial, sans-serif;
+      background:
+        radial-gradient(circle at 15% 8%, rgba(242, 177, 94, .24), transparent 28rem),
+        linear-gradient(180deg, #f7fbf7 0%, var(--paper) 48%, #eef7f4 100%);
+      line-height: 1.7;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .hero {
+      min-height: 92vh;
+      display: grid;
+      align-items: end;
+      position: relative;
+      overflow: hidden;
+      color: #fff;
+      background:
+        linear-gradient(180deg, rgba(15, 33, 30, .28) 0%, rgba(15, 33, 30, .38) 44%, rgba(15, 33, 30, .78) 100%),
+        url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1800&q=82") center/cover;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: 12rem;
+      background: linear-gradient(180deg, transparent, var(--paper));
+    }
+
+    .hero-inner {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 64px 0 112px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      border: 1px solid rgba(255, 255, 255, .42);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .12);
+      backdrop-filter: blur(10px);
+      font-size: 14px;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      max-width: 760px;
+      margin: 22px 0 18px;
+      font-size: clamp(44px, 8vw, 92px);
+      line-height: 1.05;
+      letter-spacing: 0;
+      font-weight: 900;
+      text-wrap: balance;
+    }
+
+    .hero-copy {
+      max-width: 600px;
+      margin: 0 0 32px;
+      color: rgba(255, 255, 255, .9);
+      font-size: clamp(18px, 2vw, 24px);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 22px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, .34);
+      font-weight: 800;
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px rgba(0, 0, 0, .18);
+    }
+
+    .button-primary {
+      background: #fff;
+      color: var(--leaf-dark);
+    }
+
+    .button-secondary {
+      background: rgba(255, 255, 255, .14);
+      color: #fff;
+      backdrop-filter: blur(10px);
+    }
+
+    main {
+      position: relative;
+      z-index: 2;
+    }
+
+    .section {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 64px 0;
+    }
+
+    .intro {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 360px;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .intro h2,
+    .details h2,
+    .notice h2 {
+      margin: 0 0 16px;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.16;
+      letter-spacing: 0;
+    }
+
+    .intro p {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .photo-tile {
+      min-height: 460px;
+      border-radius: 8px;
+      background:
+        linear-gradient(180deg, rgba(0, 0, 0, .04), rgba(0, 0, 0, .22)),
+        url("https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?auto=format&fit=crop&w=900&q=82") center/cover;
+      box-shadow: var(--shadow);
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .info-item {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .72);
+    }
+
+    .label {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .value {
+      display: block;
+      font-size: 18px;
+      font-weight: 900;
+      line-height: 1.35;
+    }
+
+    .details {
+      background: #ffffff;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .detail-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+
+    .panel {
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      padding: 28px;
+      background: #fff;
+    }
+
+    .panel strong {
+      display: block;
+      margin-bottom: 14px;
+      font-size: 22px;
+    }
+
+    .panel ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .panel li {
+      padding: 11px 0;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+    }
+
+    .panel li:first-child {
+      border-top: 0;
+    }
+
+    .notice {
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    .summary {
+      background: #f6fbf8;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .summary h2 {
+      margin: 0 0 12px;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.16;
+      letter-spacing: 0;
+    }
+
+    .summary-copy {
+      max-width: 760px;
+      margin: 0 0 28px;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .summary-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .82);
+      padding: 24px;
+    }
+
+    .summary-card strong {
+      display: block;
+      margin-bottom: 12px;
+      font-size: 22px;
+    }
+
+    .summary-card ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .summary-card li {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 10px 0;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+    }
+
+    .summary-card li:first-child {
+      border-top: 0;
+    }
+
+    .summary-card .total {
+      color: var(--leaf-dark);
+      font-weight: 900;
+    }
+
+    .summary-card .note {
+      display: block;
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .shopping-card li {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .shopping-form {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+    }
+
+    .shopping-form label {
+      display: grid;
+      gap: 5px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .shopping-form input,
+    .shopping-form textarea {
+      width: 100%;
+      min-height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 0 12px;
+      color: var(--ink);
+      background: #fff;
+      font: inherit;
+      font-weight: 500;
+    }
+
+    .shopping-form textarea {
+      min-height: 74px;
+      padding-top: 8px;
+      resize: vertical;
+    }
+
+    .shopping-form input:focus,
+    .shopping-form textarea:focus {
+      outline: 2px solid rgba(92, 158, 173, .35);
+      border-color: var(--river);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .checkbox-label {
+      display: flex !important;
+      grid-template-columns: none;
+      align-items: center;
+      gap: 8px !important;
+    }
+
+    .checkbox-label input {
+      width: 18px;
+      min-height: 18px;
+    }
+
+    .sheet-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .form-message {
+      min-height: 24px;
+      margin: 2px 0 0;
+      color: var(--leaf-dark);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .mini-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      border: 0;
+      border-radius: 8px;
+      padding: 0 14px;
+      color: #fff;
+      background: var(--leaf);
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .mini-button.secondary {
+      color: var(--leaf-dark);
+      background: rgba(55, 98, 79, .12);
+    }
+
+    .notice-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 12px;
+    }
+
+    .notice-list li {
+      padding: 16px 18px;
+      border-left: 5px solid var(--river);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .72);
+      color: var(--muted);
+    }
+
+    .closing {
+      padding: 64px 16px;
+      text-align: center;
+      color: #fff;
+      background:
+        linear-gradient(135deg, rgba(36, 72, 59, .95), rgba(92, 158, 173, .88)),
+        url("https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=1600&q=82") center/cover;
+    }
+
+    .closing h2 {
+      margin: 0 auto 14px;
+      max-width: 720px;
+      font-size: clamp(30px, 5vw, 56px);
+      line-height: 1.16;
+      letter-spacing: 0;
+    }
+
+    .closing p {
+      max-width: 620px;
+      margin: 0 auto 28px;
+      color: rgba(255, 255, 255, .9);
+      font-size: 18px;
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      color: rgba(255, 255, 255, .78);
+      font-size: 14px;
+    }
+
+    @media (max-width: 820px) {
+      .hero {
+        min-height: 86vh;
+      }
+
+      .hero-inner {
+        padding: 44px 0 88px;
+      }
+
+      .intro,
+      .detail-layout,
+      .summary-grid,
+      .notice {
+        grid-template-columns: 1fr;
+      }
+
+      .photo-tile {
+        min-height: 280px;
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .section {
+        padding: 44px 0;
+      }
+
+      h1 {
+        font-size: 46px;
+      }
+
+      .hero-copy {
+        font-size: 18px;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .panel {
+        padding: 22px;
+      }
+
+      .shopping-card li {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .sheet-actions .mini-button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">流霞谷親水園區｜烤肉邀請</div>
+      <h1>一場不用飛遠的烤肉小旅行</h1>
+      <p class="hero-copy">有溪水、有山風、有一爐炭火，還有一群剛剛好的朋友。把忙碌留在城市裡，跟我們去流霞谷放空一下。</p>
+      <div class="hero-actions">
+        <a class="button button-primary" href="#signup">我要參加</a>
+        <a class="button button-secondary" href="https://www.google.com/maps/search/?api=1&query=%E6%B5%81%E9%9C%9E%E8%B0%B7%E8%A6%AA%E6%B0%B4%E7%83%A4%E8%82%89%E5%9C%92%E5%8D%80" target="_blank" rel="noreferrer">查看地點</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section intro" aria-labelledby="intro-title">
+      <div>
+        <h2 id="intro-title">不用出國，也能換一口空氣。</h2>
+        <p>很多人總想等有空了，再去遠方走走。但有時候，一場旅行不一定要很遠，也不一定要很盛大。</p>
+        <p>換個地方、吃點不一樣的東西，和喜歡的人一起吹風聊天，其實就已經很像旅行了。</p>
+        <p>這一次，我們不去東京、不飛巴黎，只去流霞谷。烤肉、玩水、聊天、放空，用最隨興的方式，來一場小小的出走。</p>
+
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="label">日期</span>
+            <span class="value">2026/08/08</span>
+          </div>
+          <div class="info-item">
+            <span class="label">時間</span>
+            <span class="value">10:00 開始集合</span>
+          </div>
+          <div class="info-item">
+            <span class="label">地點</span>
+            <span class="value">流霞谷親水園區</span>
+          </div>
+          <div class="info-item">
+            <span class="label">形式</span>
+            <span class="value">烤肉、玩水、放空</span>
+          </div>
+        </div>
+      </div>
+      <div class="photo-tile" role="img" aria-label="炭火烤肉的照片"></div>
+    </section>
+
+    <section class="details">
+      <div class="section detail-layout">
+        <div class="panel">
+          <strong>當天想像</strong>
+          <ul>
+            <li>10:00 開始集合，抵達流霞谷後先找個舒服的位置。</li>
+            <li>一邊烤肉，一邊讓溪水和山風幫忙降溫。</li>
+            <li>想玩水就玩水，想聊天就聊天，累了就休息。</li>
+            <li>沒有硬排行程，重點是大家一起自在。</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <strong>活動資訊</strong>
+          <ul>
+            <li>地點：桃園市復興區流霞谷親水烤肉園區。</li>
+            <li>費用：目前帳篷與烤肉組合計 7,400 元，已付訂金 4,000 元。</li>
+            <li>交通：可自行前往，或統計後安排共乘。</li>
+            <li>時間：2026/08/08，10:00 開始集合。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="summary">
+      <div class="section" aria-labelledby="summary-title">
+        <h2 id="summary-title">目前統計</h2>
+        <p class="summary-copy">因參加人數較多，除了原本套組外，會額外採買食材與飲料，最後費用依實際金額平均分攤。</p>
+        <div class="summary-grid">
+          <div class="summary-card">
+            <strong>參加人員</strong>
+            <ul>
+              <li><span>Ryan</span><span>4人</span></li>
+              <li><span>James</span><span>4人</span></li>
+              <li><span>Prince</span><span>5人</span></li>
+              <li><span>Leo</span><span>4人</span></li>
+              <li><span>Tom</span><span>3人</span></li>
+              <li><span>Jack</span><span>1人</span></li>
+              <li class="total"><span>目前總計</span><span>21人</span></li>
+            </ul>
+          </div>
+          <div class="summary-card">
+            <strong>費用概算</strong>
+            <ul>
+              <li><span>帳篷</span><span>1,500 x 2 = 3,000元</span></li>
+              <li><span>烤肉組</span><span>2,200 x 2 = 4,400元</span></li>
+              <li><span>超出人數</span><span>多1人 +150元</span></li>
+              <li class="total"><span>目前訂金</span><span>已付 4,000元</span></li>
+            </ul>
+            <span class="note">額外採買會依實際花費再一起結算。</span>
+          </div>
+          <div class="summary-card shopping-card">
+            <strong>額外採買與認領</strong>
+            <ul>
+              <li><span>好市多烤肉食材</span><span>可直接填下方認領</span></li>
+              <li><span>飲料</span><span>可直接填下方認領</span></li>
+              <li><span>啤酒</span><span>可直接填下方認領</span></li>
+              <li><span>冰塊</span><span>可直接填下方認領</span></li>
+              <li><span>紙盤、紙碗、免洗筷</span><span>可直接填下方認領</span></li>
+              <li><span>烤肉夾、剪刀、垃圾袋</span><span>可直接填下方認領</span></li>
+            </ul>
+            <form class="shopping-form" id="shopping-form">
+              <label>品項
+                <input id="shopping-item" name="item" type="text" placeholder="例如：飲料、啤酒、冰塊" required>
+              </label>
+              <label>認領人
+                <input id="shopping-owner" name="owner" type="text" placeholder="例如：Ryan" required>
+              </label>
+              <div class="form-row">
+                <label>數量
+                  <input id="shopping-quantity" name="quantity" type="text" placeholder="例如：2箱">
+                </label>
+                <label>金額
+                  <input id="shopping-amount" name="amount" type="number" min="0" inputmode="numeric" placeholder="例如：800">
+                </label>
+              </div>
+              <label>備註
+                <textarea id="shopping-note" name="note" placeholder="例如：無糖茶多一點、已在好市多購買"></textarea>
+              </label>
+              <label class="checkbox-label">
+                <input id="shopping-purchased" name="purchased" type="checkbox">
+                已購買
+              </label>
+              <div class="sheet-actions">
+                <button class="mini-button" id="shopping-submit" type="submit">送出紀錄</button>
+                <a class="mini-button secondary" href="https://docs.google.com/spreadsheets/d/1tTAVg4fn4Zf7-HA2ZBfkYUqoiQNMndNlRJ0wv0peqnQ/edit?usp=sharing" target="_blank" rel="noreferrer">查看清單</a>
+              </div>
+              <p class="form-message" id="shopping-message" role="status" aria-live="polite"></p>
+            </form>
+            <span class="note">送出後會自動記錄到 Google Sheet，大家查看清單時會看到同一份資料。</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section notice" aria-labelledby="notice-title">
+      <div>
+        <h2 id="notice-title">小提醒</h2>
+        <p>流霞谷是溪邊場地，輕鬆好玩，也要一起把安全和環境顧好。</p>
+      </div>
+      <ul class="notice-list">
+        <li>想玩水的人建議帶換洗衣物、毛巾、防滑鞋或涼鞋。</li>
+        <li>山區蚊蟲較多，可自備防蚊用品與簡單藥品。</li>
+        <li>溪水狀況會受天氣影響，出發前會再確認是否照常。</li>
+        <li>請一起維持場地乾淨，垃圾與廚餘依園區規定處理。</li>
+      </ul>
+    </section>
+
+    <section id="signup" class="closing">
+      <h2>跟著我們一起來吧。</h2>
+      <p>到流霞谷，參加這場屬於我們的烤肉小旅行。吹吹風、聊聊天、吃吃烤肉，把平常的忙碌暫時放一旁。</p>
+      <a class="button button-primary" href="https://line.me/R/ti/p/@your-line-id" target="_blank" rel="noreferrer">點我報名</a>
+      <div class="footer-note">報名連結、日期與費用可再替換成正式資訊。</div>
+    </section>
+  </main>  <script>
+    const scriptUrl = "https://script.google.com/macros/s/AKfycbytgMs3haEIUQ9CEI4TCcZcwHTmnq411MdD1SZO6WJs29KQqk33N2T4s3HEuAhzF1It/exec";
+    const shoppingForm = document.querySelector("#shopping-form");
+    const shoppingSubmit = document.querySelector("#shopping-submit");
+    const shoppingMessage = document.querySelector("#shopping-message");
+
+    shoppingForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      shoppingSubmit.disabled = true;
+      shoppingSubmit.textContent = "送出中...";
+      shoppingMessage.textContent = "";
+
+      const formData = new FormData(shoppingForm);
+      const payload = {
+        item: formData.get("item") || "",
+        owner: formData.get("owner") || "",
+        quantity: formData.get("quantity") || "",
+        amount: formData.get("amount") || "",
+        note: formData.get("note") || "",
+        purchased: formData.get("purchased") ? "是" : "否"
+      };
+
+      try {
+        await fetch(scriptUrl, {
+          method: "POST",
+          mode: "no-cors",
+          headers: {
+            "Content-Type": "text/plain;charset=utf-8"
+          },
+          body: JSON.stringify(payload)
+        });
+
+        shoppingForm.reset();
+        shoppingMessage.textContent = "已送出，請到 Google Sheet 查看紀錄。";
+      } catch (error) {
+        shoppingMessage.textContent = "送出失敗，請稍後再試或直接打開清單填寫。";
+      } finally {
+        shoppingSubmit.disabled = false;
+        shoppingSubmit.textContent = "送出紀錄";
+      }
+    });
+  </script>
+</body>
+</html>
+
+
+
+
