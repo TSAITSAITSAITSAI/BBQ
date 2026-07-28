@@ -1,6 +1,6 @@
 const SPREADSHEET_ID = "1tTAVg4fn4Zf7-HA2ZBfkYUqoiQNMndNlRJ0wv0peqnQ";
 const SHEET_NAME = "認領清單";
-const HEADERS = ["id", "item", "owner", "amount", "note", "confirmed", "createdAt", "updatedAt"];
+const HEADERS = ["id", "item", "owner", "amount", "createdAt", "updatedAt"];
 
 function doGet(e) {
   const params = e && e.parameter ? e.parameter : {};
@@ -64,7 +64,6 @@ function migrateHeaders(sheet) {
 
   const oldRows = lastRow < 2 ? [] : sheet.getRange(2, 1, lastRow - 1, lastColumn).getValues();
   const nextRows = oldRows.map((row) => HEADERS.map((header) => {
-    if (header === "note" && headerIndex[header] === undefined) return "";
     const index = headerIndex[header];
     return index === undefined ? "" : row[index];
   }));
@@ -93,10 +92,8 @@ function listClaims() {
       item: String(row[1] || ""),
       owner: String(row[2] || ""),
       amount: String(row[3] || ""),
-      note: String(row[4] || ""),
-      confirmed: String(row[5] || "否"),
-      createdAt: String(row[6] || ""),
-      updatedAt: String(row[7] || "")
+      createdAt: String(row[4] || ""),
+      updatedAt: String(row[5] || "")
     }));
 
   return { ok: true, rows };
@@ -109,7 +106,7 @@ function createClaim(payload) {
   const owner = clean(payload.owner);
 
   if (!item || !owner) {
-    throw new Error("品項和認領人都要填。");
+    throw new Error("品項和會帶的人都要填。");
   }
 
   sheet.appendRow([
@@ -117,8 +114,6 @@ function createClaim(payload) {
     item,
     owner,
     clean(payload.amount),
-    clean(payload.note),
-    payload.confirmed === "是" ? "是" : "否",
     now,
     now
   ]);
@@ -140,7 +135,7 @@ function updateClaim(payload) {
   const owner = clean(payload.owner);
 
   if (!item || !owner) {
-    throw new Error("品項和認領人都要填。");
+    throw new Error("品項和會帶的人都要填。");
   }
 
   sheet.getRange(rowNumber, 1, 1, HEADERS.length).setValues([[
@@ -148,9 +143,7 @@ function updateClaim(payload) {
     item,
     owner,
     clean(payload.amount),
-    clean(payload.note),
-    payload.confirmed === "是" ? "是" : "否",
-    oldRow[6] || new Date(),
+    oldRow[4] || new Date(),
     new Date()
   ]]);
 

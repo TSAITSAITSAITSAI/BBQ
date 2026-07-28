@@ -348,7 +348,7 @@
     .claim-row,
     .claim-head {
       display: grid;
-      grid-template-columns: 1.4fr .9fr .8fr 1.2fr .7fr 140px;
+      grid-template-columns: 2.2fr 1fr .8fr 140px;
       gap: 10px;
       align-items: center;
     }
@@ -383,8 +383,7 @@
       font-weight: 600;
     }
 
-    .claim-amount,
-    .claim-confirmed {
+    .claim-amount {
       color: var(--muted);
       font-weight: 800;
     }
@@ -435,15 +434,10 @@
       background: #a33d2a;
     }
 
-    .claim-note {
-      color: var(--muted);
-      font-weight: 700;
-      overflow-wrap: anywhere;
-    }
 
     .claim-add-form {
       display: grid;
-      grid-template-columns: 1.4fr .9fr .8fr 1.2fr .7fr 92px;
+      grid-template-columns: 2.2fr 1fr .8fr 92px;
       gap: 10px;
       margin-top: 14px;
       padding-top: 14px;
@@ -782,28 +776,21 @@
             </div>
             <div class="claim-head" aria-hidden="true">
               <span>品項</span>
-              <span>認領人</span>
+              <span>會帶的人</span>
               <span>金額</span>
-              <span>備註</span>
-              <span>確認</span>
               <span></span>
             </div>
             <div class="claim-list" id="claim-list">
               <div class="empty-state">正在讀取 Google Sheet 最新資料</div>
             </div>
             <form class="claim-add-form" id="claim-form">
-              <input id="claim-item" name="item" type="text" placeholder="好市多肉" aria-label="品項" required>
-              <input id="claim-owner" name="owner" type="text" placeholder="認領人" aria-label="認領人" required>
+              <input id="claim-item" name="item" type="text" placeholder="會帶什麼，例如：好市多肉、冰塊、飲料" aria-label="品項" required>
+              <input id="claim-owner" name="owner" type="text" placeholder="誰帶" aria-label="會帶的人" required>
               <input id="claim-amount" name="amount" type="text" placeholder="金額或未確定" aria-label="金額">
-              <input id="claim-note" name="note" type="text" placeholder="備註" aria-label="備註">
-              <select id="claim-confirmed" name="confirmed" aria-label="確認狀態">
-                <option value="否">未確認</option>
-                <option value="是">已確認</option>
-              </select>
               <button class="mini-button" id="claim-submit" type="submit">新增</button>
             </form>
             <p class="form-message" id="claim-message" role="status" aria-live="polite"></p>
-            <span class="note">清單會直接讀取 Google Sheet 最新狀況；修改後會自動重新整理。</span>
+            <span class="note">這裡可以直接看大家會帶哪些東西；金額可先留空或填未確定。</span>
           </div>
         </div>
       </div>
@@ -909,8 +896,6 @@
           <span class="claim-item">${escapeHtml(claim.item) || "-"}</span>
           <span class="claim-owner">${escapeHtml(claim.owner) || "-"}</span>
           <span class="claim-amount">${moneyText(claim.amount)}</span>
-          <span class="claim-note">${escapeHtml(claim.note) || "-"}</span>
-          <span><span class="claim-status ${claim.confirmed === "是" ? "" : "pending"}">${claim.confirmed === "是" ? "已確認" : "未確認"}</span></span>
           <span class="claim-actions">
             <button class="icon-button" type="button" data-action="edit">編輯</button>
             <button class="icon-button danger" type="button" data-action="delete">刪除</button>
@@ -946,13 +931,8 @@
 
       row.innerHTML = `
         <input name="item" value="${escapeHtml(claim.item)}" aria-label="品項">
-        <input name="owner" value="${escapeHtml(claim.owner)}" aria-label="認領人">
+        <input name="owner" value="${escapeHtml(claim.owner)}" aria-label="會帶的人">
         <input name="amount" type="text" value="${escapeHtml(claim.amount)}" aria-label="金額">
-        <input name="note" value="${escapeHtml(claim.note)}" aria-label="備註">
-        <select name="confirmed" aria-label="確認狀態">
-          <option value="否" ${claim.confirmed === "是" ? "" : "selected"}>未確認</option>
-          <option value="是" ${claim.confirmed === "是" ? "selected" : ""}>已確認</option>
-        </select>
         <span class="claim-actions">
           <button class="icon-button primary" type="button" data-action="save">儲存</button>
           <button class="icon-button" type="button" data-action="cancel">取消</button>
@@ -964,16 +944,14 @@
       const item = row.querySelector('[name="item"]').value.trim();
       const owner = row.querySelector('[name="owner"]').value.trim();
       const amount = row.querySelector('[name="amount"]').value.trim();
-      const note = row.querySelector('[name="note"]').value.trim();
-      const confirmed = row.querySelector('[name="confirmed"]').value;
 
       if (!item || !owner) {
-        setClaimMessage("品項和認領人都要填。", true);
+        setClaimMessage("品項和會帶的人都要填。", true);
         return;
       }
 
       setClaimMessage("儲存中...");
-      await postClaim({ action: "update", id: row.dataset.id, item, owner, amount, note, confirmed });
+      await postClaim({ action: "update", id: row.dataset.id, item, owner, amount });
       setClaimMessage("已儲存，正在更新最新狀況。");
       window.setTimeout(loadClaims, 800);
     };
@@ -1017,8 +995,7 @@
         item: formData.get("item") || "",
         owner: formData.get("owner") || "",
         amount: formData.get("amount") || "",
-        note: formData.get("note") || "",
-        confirmed: formData.get("confirmed") || "否"
+
       };
 
       try {
@@ -1039,6 +1016,8 @@
   </script>
 </body>
 </html>
+
+
 
 
 
