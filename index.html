@@ -948,6 +948,11 @@
       });
     };
 
+    const sortClaimsByOwner = (rows) => [...rows].sort((a, b) => {
+      const ownerCompare = String(a.owner || "").localeCompare(String(b.owner || ""), "zh-Hant");
+      if (ownerCompare !== 0) return ownerCompare;
+      return String(a.item || "").localeCompare(String(b.item || ""), "zh-Hant");
+    });
     const renderClaims = () => {
       if (!claims.length) {
         claimList.innerHTML = '<div class="empty-state">目前還沒有認領資料，從下方新增第一筆。</div>';
@@ -977,7 +982,7 @@
         if (data.ok === false) {
           throw new Error(data.message || "Apps Script 回傳失敗。");
         }
-        claims = Array.isArray(data.rows) ? data.rows : [];
+        claims = Array.isArray(data.rows) ? sortClaimsByOwner(data.rows) : [];
         renderClaims();
         setClaimMessage("已更新到最新狀況。");
       } catch (error) {
@@ -1081,6 +1086,7 @@
   </script>
 </body>
 </html>
+
 
 
 
