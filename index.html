@@ -248,6 +248,53 @@
       gap: 32px;
       align-items: start;
     }
+    .bbq-sets {
+      background: #fffaf0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .bbq-sets h2 {
+      margin: 0 0 12px;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.16;
+      letter-spacing: 0;
+    }
+
+    .bbq-sets-copy {
+      max-width: 760px;
+      margin: 0 0 28px;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .bbq-set-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      align-items: start;
+    }
+
+    .bbq-set-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .86);
+      padding: 16px;
+    }
+
+    .bbq-set-card strong {
+      display: block;
+      margin-bottom: 12px;
+      font-size: 20px;
+    }
+
+    .bbq-set-card img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
 
     .summary {
       background: #f6fbf8;
@@ -603,6 +650,7 @@
       .intro,
       .detail-layout,
       .summary-grid,
+      .bbq-set-grid,
       .notice {
         grid-template-columns: 1fr;
       }
@@ -737,6 +785,23 @@
             <li>交通：可自行前往，或統計後安排共乘。</li>
             <li>時間：2026/08/08，10:00 開始集合。</li>
           </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="bbq-sets" aria-labelledby="bbq-sets-title">
+      <div class="section">
+        <h2 id="bbq-sets-title">購買的烤肉組內容</h2>
+        <p class="bbq-sets-copy">目前預計購買兩組 2,200 元的烤肉套餐，內容先放在這裡，方便大家對照還需要額外帶哪些東西。</p>
+        <div class="bbq-set-grid">
+          <div class="bbq-set-card">
+            <strong>秘製無骨雞腿排套餐</strong>
+            <img src="assets/bbq-set-classic.jpg" alt="秘製無骨雞腿排 2200 元烤肉組內容清單">
+          </div>
+          <div class="bbq-set-card">
+            <strong>2200 快樂餐 8-10 人</strong>
+            <img src="assets/bbq-set-happy.jpg" alt="2200 快樂餐 8 到 10 人烤肉組內容清單">
+          </div>
         </div>
       </div>
     </section>
@@ -1016,6 +1081,7 @@
   </script>
 </body>
 </html>
+
 
 
 
